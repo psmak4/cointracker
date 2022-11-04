@@ -1,53 +1,10 @@
 import { createContext, useContext, useReducer } from 'react'
-import LocalStorageHelpers from '../../helpers/LocalStorage'
+import sessionActions from './actions'
+import defaultSession from './default'
+import sessionReducer from './reducer'
 
 const SessionStateContext = createContext()
 const SessionDispatchContext = createContext()
-
-const defaultSession = {
-	wallets: {},
-}
-
-const sessionActions = {
-	ADD_WALLET: 'add wallet',
-	CLEAR_SESSION: 'clear session',
-	REMOVE_WALLET: 'remove wallet',
-}
-
-const AddWallet = (state, action) => {
-	state.wallets[action.wallet.address] = action.wallet
-	LocalStorageHelpers.AddWallet(action.wallet.address)
-
-	return {
-		...state,
-	}
-}
-
-const ClearSession = () => {
-	return defaultSession
-}
-
-const RemoveWallet = (state, action) => {
-	delete state.wallets[action.wallet.address]
-	LocalStorageHelpers.RemoveWallet(action.wallet.address)
-
-	return {
-		...state,
-	}
-}
-
-const sessionReducer = (state, action) => {
-	switch (action.type) {
-		case sessionActions.ADD_WALLET:
-			return AddWallet(state, action)
-		case sessionActions.CLEAR_SESSION:
-			return ClearSession()
-		case sessionActions.REMOVE_WALLET:
-			return RemoveWallet(state, action)
-		default:
-			return state
-	}
-}
 
 function SessionProvider({ children }) {
 	const [state, dispatch] = useReducer(sessionReducer, defaultSession)
