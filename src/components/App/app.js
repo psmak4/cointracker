@@ -14,27 +14,28 @@ const App = () => {
 	const sessionDispatch = useSessionDispatch()
 	const [showNewWalletModal, setShowNewWalletModal] = useState(false)
 	const [selectedWallet, setSelectedWallet] = useState(null)
-	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
 		const loadWallets = async () => {
-			const addresses = LocalStorageHelpers.GetStoredWallets()
-			addresses.forEach(async address => {
-				const wallet = await WalletService.GetWallet(address)
-				if (wallet)
-					sessionDispatch({
-						type: sessionActions.ADD_WALLET,
-						wallet,
-					})
-			})
+			try {
+				const addresses = LocalStorageHelpers.GetStoredWallets()
+				addresses.forEach(async address => {
+					const wallet = await WalletService.GetWallet(address)
+					if (wallet)
+						sessionDispatch({
+							type: sessionActions.ADD_WALLET,
+							wallet,
+						})
+				})
+			} catch (e) {
+				console.error(e)
+			}
 		}
 
-		loadWallets().then(() => setIsLoading(false))
+		loadWallets()
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-
-	if (isLoading) return <>Loading...</>
 
 	return (
 		<>
