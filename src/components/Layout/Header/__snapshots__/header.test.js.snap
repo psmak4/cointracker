@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header /> renders correctly 1`] = `
+<div>
+  <header
+    class="navbar navbar-expand navbar-dark bg-dark"
+    role="navigation"
+  >
+    <div
+      class="px-4 container-fluid"
+    >
+      <span
+        class="navbar-brand"
+      >
+        Cointracker
+      </span>
+    </div>
+  </header>
+</div>
+`;

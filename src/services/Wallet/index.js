@@ -1,13 +1,3 @@
-const apiEndpoint = 'https://blockchain.info/rawaddr/'
-
-const WalletService = {
-	GetWallet: async address => {
-		const response = await fetch(`${apiEndpoint}${address}?cors=true`)
-
-		if (response.ok) return await response.json()
-
-		return null
-	},
-}
+import WalletService from './wallet'
 
 export default WalletService
